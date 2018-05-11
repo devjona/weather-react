@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SearchBar from './searchBar';
+import SearchBar from './components/searchBar';
 // import weatherJS from 'weather-js';
 
 class App extends Component {
@@ -10,6 +10,7 @@ class App extends Component {
 
         this.state = {
             city: '',
+            // citiesList
             forecast: []
         };
     }
@@ -23,7 +24,7 @@ class App extends Component {
                 </div>
                 <p className="App-intro">
                     To get started, edit
-                    <code>src/App.js</code>
+                    <code> src/App.js </code>
                     and save to reload. You did it!
                 </p>
                 {/* <SearchBar /> */}
