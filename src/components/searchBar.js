@@ -5,7 +5,7 @@ class SearchBar extends Component {
         super(props)
 
         this.state = {
-            city: '',
+            city: '', // do I need to set this state?
             cityEntered: ''
         };
     }
@@ -19,7 +19,7 @@ class SearchBar extends Component {
                     onChange={event => this.onInputChange(event.target.value)}
                     value={this.state.city}
                     // event handler for when 'enter' is pressed
-                    onKeyDown = {event => this.onEnterKey(event, event.target.value)}
+                    onKeyDown = {event => this.onEnterKey(event, event.target.value)} // do I need to grab this from event or can I grab from state?
                 />
             </div>
         );

@@ -10,7 +10,7 @@ class App extends Component {
 
         this.state = {
             city: '',
-            // citiesList
+            citiesList: [],
             forecast: []
         };
     }
@@ -18,7 +18,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <div className="App-header">
+                {/* <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                     <h2>Bienvenue to Weather-React</h2>
                 </div>
@@ -26,7 +26,7 @@ class App extends Component {
                     To get started, edit
                     <code> src/App.js </code>
                     and save to reload. You did it!
-                </p>
+                </p> */}
                 {/* <SearchBar /> */}
                 <SearchBar onCitySearch={this.getCityList} />
             </div>
@@ -37,22 +37,21 @@ class App extends Component {
     // api will return an array of possible cities
     getCityList(city) {
         let weather = new XMLHttpRequest();
+        // debugger;
+        let parsedResponse;
+        let citiesList;
         weather.open('GET',
             `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
             true
         );
-        weather.onload = function(e) {
-            console.log('e: ', e);
-            if (weather.readyState === 4) {
-                if (weather.status === 200) {
-                    // typeof weather is object. typeof weather.response is string; parse it!
-                    let responseParsed = JSON.parse(weather.response);
-                    console.log('responseParsed.res: ', responseParsed.response.results);
-                }
-            }
-
-        };
-        weather.send(null);
+        weather.onload = function () {
+            console.log('weather onload!');
+            parsedResponse = JSON.parse(weather.response);
+            citiesList = parsedResponse.response.results;
+            console.log('cl1: ', citiesList);
+        }
+        weather.send();
+        console.log('cL2: ', citiesList);
     }
 
 
