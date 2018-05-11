@@ -19,7 +19,7 @@ class App extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
-                    <h2>Bienvenue to React</h2>
+                    <h2>Bienvenue to Weather-React</h2>
                 </div>
                 <p className="App-intro">
                     To get started, edit
@@ -40,13 +40,10 @@ class App extends Component {
             `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
             true
         );
-
-        console.log('weather 1: ', weather);
-
         weather.onload = function(e) {
+            console.log('e: ', e);
             if (weather.readyState === 4) {
                 if (weather.status === 200) {
-                    console.log('weather 2: ', weather);
                     // typeof weather is object. typeof weather.response is string; parse it!
                     let responseParsed = JSON.parse(weather.response);
                     console.log('responseParsed.res: ', responseParsed.response.results);
