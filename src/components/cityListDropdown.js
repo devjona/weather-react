@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+import React from 'react';
+import CityResult from './cityResult'
 
-class CityListDropdown extends Component {
-    constructor(props) {
-        super(props)
+const CityListDropdown = (props) => {
+    console.log('PROPS cL: ', props);
 
-        this.state ={};
-    }
+    const citiesList = props.citiesList.map((city) => {
+        return <CityResult key={city.zmw} city={city} />
+    });
 
-    render() {
-        return (
-            <div className="city-list-dropdown">
-                <ul>
-                    <li>We'll have a list!</li>
-                </ul>
-            </div>
-        )
-    }
-}
+    return (
+        <ul className="city-list-dropdown">
+            {citiesList}
+        </ul>
+    )
+
+};
 
 export default CityListDropdown;
