@@ -1,8 +1,13 @@
 import React from 'react';
 
-const CityResult = ({city}) => {
+// When you click on a city in the results, you need to grab the city and state and pass it to App.js so it can render the forecast component.
+const CityResult = ({city, onCitySelect}) => {
     console.log('city: ', city);
-    return <li>{city.name}, {city.state}, {city.country_iso3166}</li>
+    return (
+        <li onClick={() => onCitySelect(city)}>
+            {city.name}, {city.state}, {city.country_iso3166}
+        </li>
+    )
 };
 
 export default CityResult;

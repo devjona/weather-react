@@ -6,7 +6,13 @@ const CityListDropdown = (props) => {
     console.log('PROPS cL: ', props);
 
     const citiesList = props.citiesList.map((city) => {
-        return <CityResult key={city.zmw} city={city} />
+        return (
+            <CityResult 
+                key={city.zmw}
+                city={city}
+                onCitySelect={props.onCitySelect} 
+            />
+        )
     });
 
     return (

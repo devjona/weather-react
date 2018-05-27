@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import './App.css';
 import SearchBar from './components/searchBar';
 import CityListDropdown from './components/cityListDropdown';
-// import weatherJS from 'weather-js';
+import CityWeather from './components/cityWeather';
+
 console.log('App this: ', this);
 class App extends Component {
     constructor(props) {
@@ -12,28 +13,29 @@ class App extends Component {
         this.state = {
             city: '',
             citiesList: [],
-            forecast: []
+            cityWeather: null,
+            cityForeast: null
         };
 
         console.log('constructor this: ', this);
         this.getCityList = this.getCityList.bind(this);
+        this.getCityWeather = this.getCityWeather.bind(this);
+        // this.getCityForecast = this.getCityForecast.bind(this);
     }
 
     render() {
         return (
             <div className="App">
-                {/* <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h2>Bienvenue to Weather-React</h2>
-                </div>
-                <p className="App-intro">
-                    To get started, edit
-                    <code> src/App.js </code>
-                    and save to reload. You did it!
-                </p> */}
-                {/* <SearchBar /> */}
                 <SearchBar onCitySearch={this.getCityList} />
-                <CityListDropdown citiesList={this.state.citiesList} />
+                <CityListDropdown 
+                    citiesList={this.state.citiesList} 
+                    // you need to make the API call for city Weather when you click a city...Figure that out!
+                    // onCitySelect={forecastLocation => this.setState({forecastLocation})}
+                    onCitySelect={this.getCityWeather}
+                />
+                <CityWeather 
+                    cityWeather={this.state.cityWeather} 
+                />
             </div>
         );
     }
@@ -67,20 +69,36 @@ class App extends Component {
     // from list of cities, user should pick which 'Austin', e.g., Austin, TX, so we make another request with a slightly different URL that includes state and city
     // you'll need another one to take the click the user selects:
     // grab the city and state of that and do another HTML request:
-    // getCityWeather(state, city) {
-    //     let weather = new XMLHttpRequest();
-    //     weather.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${state}/${city}.json`);
-    //     weather.send(null);
-    //
-    //     let response = JSON.parse(weather.current_observation) // bunch of weather data for the present
-    // }
+    getCityWeather(city) {
+        // console.log('state: ', this.state.forecastLocation);
+        // let location = this.state.forecastLocation;
+        console.log('city: ', city);
+        
+        let parsedResponse;
+        
+        //http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/CA/San_Francisco.json
+        let weather = new XMLHttpRequest();
+        weather.open('GET',
+            `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`,
+            true
+        );
+
+        weather.onload = () => {
+            parsedResponse = JSON.parse(weather.response);
+            // parsedResponse = weather.response;
+            console.log('parsedResponse City Weather: ', parsedResponse);
+            this.setState({cityWeather: parsedResponse.current_observation});
+            
+        }
+        weather.send();
+    }
 
     // // once a city is selected, we can also send a request to the api for a forecast; this is a different component
-    // getCityForecast(state, city) {
+    // getCityForecast(location) {
     //     let weather = new XMLHttpRequest();
     //     weather.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
     //     weather.send(null);
-    //
+    
     //     let response = JSON.parse(weather.current_observation) // not sure if I need to change the weather observation to somethiong else
     // }
 
