@@ -1,6 +1,6 @@
 # Weather React
 
-Hello! When I deploy this project, it probably won't be called "weather-react". For now, that's a plain and appropriate name for it. Although... I do want the theme of the page to 'react' to the search result, so maybe I'll leave the name alone.
+_Hello! When I deploy this project, it probably won't be called "weather-react". For now, that's a plain and appropriate name for it. Although... I do want the theme of the page to 'react' to the search result, so maybe I'll leave the name alone. The name is probabl not original so, yeah, I will probably ditch it._
 
 ## Objective:
 The goal of this app was to create a simple React project based on what I learned from a tutorial on Udemy and from the intro exercises on the official React page. Also, although I really like front-end work, I don't get a chance to do much of it, especially with "mainstream" or "modern" front-end libraries and tools.
@@ -27,7 +27,17 @@ I'm encountering some interesting problems that I intend to solve. I'm thinking 
 ## Fun stuff to innovate:
 I'd like to make this page responsive to the search results that appear. Whether it's with subtle animations, learning to work with SVG graphics, or toggling classes based on change of state and search results to change the theme of the page (day, night, sunny, cloudy, rainy, etc.), it's a challenge to take user input, return API data, and present it in a very delightful way.
 
-## Additional Info:
-If you need more info, this project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+## Solutions:
+I will update this section with comments on the solutions to the issues and goals from the sections above.
 
-I'm using this API: https://www.wunderground.com/weather/api
+## Additional and Miscellaneous Info:
+### Software Tools
+* If you need more info, this project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+* I'm using this API: https://www.wunderground.com/weather/api
+* Plain CSS
+### Hardware (random, I know but sometimes we are curious about these matters)
+* Input Club White Fox "True Fox" layout
+* Logitech MX Master 2 mouse
+* 2015 Macbook Air
+* Logitech 29" ultrawide display (the budget version)
+* A cheap IKEA desk and chair
