@@ -6,17 +6,18 @@ const CityWeather = ({cityWeather}) => {
     }
     const temp = cityWeather.temperature_string;
     const cityFull = cityWeather.observation_location.full;
-
-    console.log('cityWeather file');
-
+    const humidity = cityWeather.relative_humidity;
+    const windDir = cityWeather.wind_dir;
+    const feelsLike = cityWeather.feelslike_string;
     
     return (
         <ul>
             <p>Forecast</p>
             <p>Location: {cityFull}</p>
             <p>Temperature: {temp}</p>
+            <p>Humidity: {humidity}</p>
+            <p>Feels Like: {feelsLike}</p>
         </ul>
-
     )
 }
 

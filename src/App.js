@@ -30,7 +30,6 @@ class App extends Component {
                 <CityListDropdown 
                     citiesList={this.state.citiesList} 
                     // you need to make the API call for city Weather when you click a city...Figure that out!
-                    // onCitySelect={forecastLocation => this.setState({forecastLocation})}
                     onCitySelect={this.getCityWeather}
                 />
                 <CityWeather 
@@ -88,7 +87,6 @@ class App extends Component {
             // parsedResponse = weather.response;
             console.log('parsedResponse City Weather: ', parsedResponse);
             this.setState({cityWeather: parsedResponse.current_observation});
-            
         }
         weather.send();
     }
