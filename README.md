@@ -10,8 +10,8 @@ I'm encountering some interesting problems that I intend to solve. I'm thinking 
 ## Stuff to solve:
 
 ### API issues:
-* This API seems to return one city when it's a city inside the US. If I search for "Toronto" and then click on "Toronto, ON, CA", I get the same entire list of results of all Torontos in the world. I'm not sure why. If i search for "Austin", I can click on "Austin, TX" and the API will yield `current_observation` data for just that city. 
-* I need to sort the responses (list of cities) in a more user-friendly way and in a way that makes more sense. What I mean is, it isn't likely that if you're in the USA, and you type "Los Angeles", that you are looking for eight-one responses to this. 
+* This API seems to return one city when it's a city inside the US. If I search for "Toronto" and then click on "Toronto, ON, CA", I get the same entire list of results of all Torontos in the world. I'm not sure why. If I search for "Austin", I can click on "Austin, TX" and the API will yield `current_observation` data for just that city. 
+* I need to sort the responses (list of cities) in a more user-friendly way and in a way that makes more sense. What I mean is, it isn't likely that if you're in the USA, and you type "Los Angeles", that you are looking for eighty-one responses to this. 
   * I could try to use the user's location to present results that are more geo-proximal
   * I could try to get a list of cities, or pre-load some API or database into here, and when a user types "Los Angeles", I can cross reference the API results with more "likely" results, limit the length of the dropdown list, and if they want more results, they can click to expand it.
 * I need to see if it's really necessary to make three API calls to get:
@@ -25,7 +25,7 @@ I'm encountering some interesting problems that I intend to solve. I'm thinking 
 * Smarter search, searc suggestions, typo-correction.
 
 ## Fun stuff to innovate:
-I'd like to make this page responsive to the search results that appear. Whether it's with subtle animations, learning to work with SVG graphics, or toggling classes based on change of state and search results to change the theme of the page (day, night, sunny, cloudy, rainy, etc.), it's a challenge to take user input, return API data, and present it in a very delightful way.
+I'd like to make this page responsive to the search results that appear. Whether it's with subtle animations, learning to work with SVG graphics, or toggling classes based on change of state and search results to change the theme of the page (day, night, sunny, cloudy, rainy, etc.), it's a fun challenge to take user input, return API data, and present it in a very delightful way.
 
 ## Solutions:
 I will update this section with comments on the solutions to the issues and goals from the sections above.
@@ -36,7 +36,7 @@ I will update this section with comments on the solutions to the issues and goal
 * I'm using this API: https://www.wunderground.com/weather/api
 * Plain CSS
 ### Hardware (random, I know but sometimes we are curious about these matters)
-* Input Club White Fox "True Fox" layout
+* Input Club White Fox "True Fox" layout/ Vortex Race 3
 * Logitech MX Master 2 mouse
 * 2015 Macbook Air
 * Logitech 29" ultrawide display (the budget version)

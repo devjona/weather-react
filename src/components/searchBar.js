@@ -7,6 +7,9 @@ class SearchBar extends Component {
         this.state = {
             city: '' // do I need to set this state?
         };
+
+        console.log('searchBar props: ', props);
+        
     }
 
     render() {
@@ -15,8 +18,10 @@ class SearchBar extends Component {
                 <input
                     className="search-input"
                     type="text"
-                    placeholder='Type a city and press "Enter"'
+                    placeholder='Type a US city and press "Enter"'
+                    // onChange calls onInputChange which sets the state
                     onChange={event => this.onInputChange(event.target.value)}
+                    // the value of the field is whatever the state is
                     value={this.state.city}
                     // event handler for when 'enter' is pressed
                     // onKeyDown = {event => this.onEnterKey(event, event.target.value)} // do I need to grab this from event or can I grab from state?
@@ -41,6 +46,8 @@ class SearchBar extends Component {
             console.log('event: ', event);
             console.log('city: ', city);
             // this.setState({cityEntered: city});
+            // when you pass paramter to the property, that parameter is passed to the function which is the value of that property:
+            // console.log looks like this: onCitySearch: function getCityList()
             this.props.onCitySearch(city);
         }
     }

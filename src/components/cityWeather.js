@@ -17,6 +17,7 @@ const CityWeather = ({cityWeather}) => {
             <p>Temperature: {temp}</p>
             <p>Humidity: {humidity}</p>
             <p>Feels Like: {feelsLike}</p>
+            <p>Wind Direction: {windDir}</p>
         </ul>
     )
 }
