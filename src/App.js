@@ -11,9 +11,9 @@ class App extends Component {
         super(props);
 
         this.state = {
-            // city: '', not used currently
             citiesList: [],
-            cityWeather: null,
+            cityWeather: null
+            // city: '', not used currently
             // cityForeast: null also not used at the moment
         };
 
@@ -27,24 +27,51 @@ class App extends Component {
     // gets user input into the search bar, send that city to the api
     // api will return an array of possible cities
     getCityList(city) {
-        let weather = new XMLHttpRequest();
         // debugger;
-        let parsedResponse;
+        let parsedRequest;
         let citiesList;
-        weather.open('GET',
-        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
-        true
-        );
-        // Because it's async, weather.onload() doesn't fire until weather.send() completes.
-        // onload = what you want to do with the request once you receive a response
-        weather.onload = () => {
-            console.log('weather onload!');
-            parsedResponse = JSON.parse(weather.response);
-            citiesList = parsedResponse.response.results;
-            console.log('cl1: ', citiesList);
-            this.setState({citiesList});
-        }
-        weather.send();
+        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
+
+        // We are going to replace this call with fetch()
+        fetch(api)
+        .then(response => response.json())
+        .then(console.log)
+
+        // I need to handle the response. Should I have a helper function I pass to a .then()?
+
+        // Forget almost everything below this line except for when you are setting state
+
+        // let request = new XMLHttpRequest();
+        // request.open('GET',
+        // `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
+        // true
+        // );
+        // // Because it's async, request.onload() doesn't fire until request.send() completes.
+        // // onload = what you want to do with the request once you receive a response
+        // request.onload = () => {
+        //     console.log('request onload!');
+        //     console.log(`request!: ${request}`);
+            
+        //     if (request.response) {
+
+        //         parsedRequest = JSON.parse(request.response);
+        //         console.log(`parsedRequest: ${parsedRequest}`);
+                
+        //     }
+        //     // this is really ugly error handling but this is what comes before using promises and fetch...
+        //     if (parsedRequest.response.results) {
+
+        //         citiesList = parsedRequest.response.results;
+        //         console.log('cl1: ', citiesList);
+        //         this.setState({citiesList});
+        //     } else {
+        //         console.log(`no results, only errors. State doesn't change. Page doesn't refresh.`);
+                
+            
+        //     }
+        // }
+        
+        // request.send();
         // console.log('cL2: ', citiesList);
         console.log('this gCL: ', this);
     }
@@ -58,31 +85,31 @@ class App extends Component {
         // let location = this.state.forecastLocation;
         console.log('city: ', city);
         
-        let parsedResponse;
+        let parsedRequest;
         
         //http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/CA/San_Francisco.json
-        let weather = new XMLHttpRequest();
-        weather.open('GET',
+        let request = new XMLHttpRequest();
+        request.open('GET',
         `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`,
             true
         );
 
-        weather.onload = () => {
-            parsedResponse = JSON.parse(weather.response);
-            // parsedResponse = weather.response;
-            console.log('parsedResponse City Weather: ', parsedResponse);
-            this.setState({cityWeather: parsedResponse.current_observation});
+        request.onload = () => {
+            parsedRequest = JSON.parse(request.response);
+            // parsedRequest = request.response;
+            console.log('parsedRequest City Weather: ', parsedRequest);
+            this.setState({cityWeather: parsedRequest.current_observation});
         }
-        weather.send();
+        request.send();
     }
 
     // // once a city is selected, we can also send a request to the api for a forecast; this is a different component
     // getCityForecast(location) {
-    //     let weather = new XMLHttpRequest();
-    //     weather.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
-    //     weather.send(null);
+    //     let request = new XMLHttpRequest();
+    //     request.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
+    //     request.send(null);
     
-    //     let response = JSON.parse(weather.current_observation) // not sure if I need to change the weather observation to somethiong else
+    //     let response = JSON.parse(request.current_observation) // not sure if I need to change the weather observation to somethiong else
     // }
         
     render() {
