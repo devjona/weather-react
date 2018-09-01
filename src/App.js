@@ -11,10 +11,10 @@ class App extends Component {
         super(props);
 
         this.state = {
-            city: '',
+            // city: '', not used currently
             citiesList: [],
             cityWeather: null,
-            cityForeast: null
+            // cityForeast: null also not used at the moment
         };
 
         console.log('constructor this: ', this);
@@ -23,22 +23,7 @@ class App extends Component {
         // this.getCityForecast = this.getCityForecast.bind(this);
     }
 
-    render() {
-        return (
-            <div className="App">
-                <SearchBar onCitySearch={this.getCityList} />
-                <CityListDropdown 
-                    citiesList={this.state.citiesList} 
-                    // you need to make the API call for city Weather when you click a city...Figure that out!
-                    onCitySelect={this.getCityWeather}
-                />
-                <CityWeather 
-                    cityWeather={this.state.cityWeather} 
-                />
-            </div>
-        );
-    }
-
+    
     // gets user input into the search bar, send that city to the api
     // api will return an array of possible cities
     getCityList(city) {
@@ -47,8 +32,8 @@ class App extends Component {
         let parsedResponse;
         let citiesList;
         weather.open('GET',
-            `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
-            true
+        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
+        true
         );
         // Because it's async, weather.onload() doesn't fire until weather.send() completes.
         // onload = what you want to do with the request once you receive a response
@@ -63,8 +48,8 @@ class App extends Component {
         // console.log('cL2: ', citiesList);
         console.log('this gCL: ', this);
     }
-
-
+    
+    
     // from list of cities, user should pick which 'Austin', e.g., Austin, TX, so we make another request with a slightly different URL that includes state and city
     // you'll need another one to take the click the user selects:
     // grab the city and state of that and do another HTML request:
@@ -78,7 +63,7 @@ class App extends Component {
         //http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/CA/San_Francisco.json
         let weather = new XMLHttpRequest();
         weather.open('GET',
-            `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`,
+        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`,
             true
         );
 
@@ -99,7 +84,22 @@ class App extends Component {
     
     //     let response = JSON.parse(weather.current_observation) // not sure if I need to change the weather observation to somethiong else
     // }
-
+        
+    render() {
+        return (
+            <div className="App">
+                <SearchBar onCitySearch={this.getCityList} />
+                <CityListDropdown 
+                    citiesList={this.state.citiesList} 
+                    // you need to make the API call for city Weather when you click a city...Figure that out!
+                    onCitySelect={this.getCityWeather}
+                />
+                <CityWeather 
+                    cityWeather={this.state.cityWeather} 
+                />
+            </div>
+        );
+    }
 }
 
 export default App;
