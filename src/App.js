@@ -12,7 +12,8 @@ class App extends Component {
 
         this.state = {
             citiesList: [],
-            cityWeather: null
+            cityWeather: null,
+            cityNotFound: null
             // city: '', not used currently
             // cityForeast: null also not used at the moment
         };
@@ -30,48 +31,71 @@ class App extends Component {
         // debugger;
         let parsedRequest;
         let citiesList;
-        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
+        // const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
 
         // We are going to replace this call with fetch()
-        fetch(api)
-        .then(response => response.json())
-        .then(console.log)
+        /* 
+        1 Call the weather API
+        2 Parse the response
+        3 Check the response to see if you're getting a list of cities (results) or an error
+        4 Based upon that, you can setState with either the results or the error message
+        */
+
+        // fetch(api)
+        //     .then(response => response.json())
+        //     .then(parsedResponse => {
+        //         console.log(`res: ${parsedResponse.response}`);
+        //         console.log(`this: ${this}`);
+                
+                
+        //         if (parsedResponse.results) {
+        //                 citiesList = parsedRequest.response.results;
+        //                 this.setState({citiesList})
+        //         } else if (parsedResponse.response.error) {
+        //             console.log(`in else if`);
+                    
+        //             return parsedResponse.response.error.description
+        //         }
+        //     })
 
         // I need to handle the response. Should I have a helper function I pass to a .then()?
 
         // Forget almost everything below this line except for when you are setting state
 
-        // let request = new XMLHttpRequest();
-        // request.open('GET',
-        // `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
-        // true
-        // );
-        // // Because it's async, request.onload() doesn't fire until request.send() completes.
-        // // onload = what you want to do with the request once you receive a response
-        // request.onload = () => {
-        //     console.log('request onload!');
-        //     console.log(`request!: ${request}`);
+        let request = new XMLHttpRequest();
+        request.open('GET',
+        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
+        true
+        );
+        // Because it's async, request.onload() doesn't fire until request.send() completes.
+        // onload = what you want to do with the request once you receive a response
+        request.onload = () => {
+            console.log('request onload!');
+            console.log(`request!: ${request}`);
             
-        //     if (request.response) {
+            if (request.response) {
 
-        //         parsedRequest = JSON.parse(request.response);
-        //         console.log(`parsedRequest: ${parsedRequest}`);
+                parsedRequest = JSON.parse(request.response);
+                console.log(`parsedRequest: ${parsedRequest}`);
                 
-        //     }
-        //     // this is really ugly error handling but this is what comes before using promises and fetch...
-        //     if (parsedRequest.response.results) {
+            }
+            // this is really ugly error handling but this is what comes before using promises and fetch...
+            if (parsedRequest.response.results) {
 
-        //         citiesList = parsedRequest.response.results;
-        //         console.log('cl1: ', citiesList);
-        //         this.setState({citiesList});
-        //     } else {
-        //         console.log(`no results, only errors. State doesn't change. Page doesn't refresh.`);
+                citiesList = parsedRequest.response.results;
+                console.log('cl1: ', citiesList);
+                this.setState({citiesList});
+            } else {
+                console.log(`no results, only errors. State doesn't change. Page doesn't refresh.`);
+                this.setState({
+                    cityNotFound: parsedRequest.response.error.description
+                })
                 
             
-        //     }
-        // }
+            }
+        }
         
-        // request.send();
+        request.send();
         // console.log('cL2: ', citiesList);
         console.log('this gCL: ', this);
     }
@@ -118,6 +142,7 @@ class App extends Component {
                 <SearchBar onCitySearch={this.getCityList} />
                 <CityListDropdown 
                     citiesList={this.state.citiesList} 
+                    cityNotFound={this.state.cityNotFound}
                     // you need to make the API call for city Weather when you click a city...Figure that out!
                     onCitySelect={this.getCityWeather}
                 />

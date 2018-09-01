@@ -6,6 +6,7 @@ import CityResult from './cityResult'
 const CityListDropdown = (props) => {
     console.log('PROPS cL: ', props);
 
+    const cityNotFound = props.cityNotFound
     const citiesList = props.citiesList.map((city) => {
         return (
             <CityResult 
@@ -18,13 +19,19 @@ const CityListDropdown = (props) => {
         )
     });
 
-    return (
-        <div>
-            <ul className="city-list-dropdown">
-                {citiesList}
-            </ul>
-        </div>
-    )
+    if (!cityNotFound) {
+        return (
+            <div>
+                <ul className="city-list-dropdown">
+                    {citiesList}
+                </ul>
+            </div>
+        )
+    } else {
+        return (
+            <div>{cityNotFound}</div>
+        )
+    }
 };
 
 export default CityListDropdown;
