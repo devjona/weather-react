@@ -7,17 +7,19 @@ const CityListDropdown = (props) => {
     console.log('PROPS cL: ', props);
 
     const cityNotFound = props.cityNotFound
-    const citiesList = props.citiesList.map((city) => {
-        return (
-            <CityResult 
-                // you are passing these props to cityResult
-                key={city.zmw}
-                city={city}
-                onCitySelect={props.onCitySelect}
-                // Add onClick event handler to hide or clear these results.
-            />
-        )
-    });
+    const citiesList = props.citiesList.filter(city => city.country == 'US')
+        .map((city) => {
+            return (
+                <CityResult 
+                    // you are passing these props to cityResult
+                    key={city.zmw}
+                    city={city}
+                    onCitySelect={props.onCitySelect}
+                    // Add onClick event handler to hide or clear these results.
+                />
+            )
+        }
+    );
 
     if (!cityNotFound) {
         return (

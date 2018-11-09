@@ -48,76 +48,34 @@ class App extends Component {
 
         // How can I extract this function a level up so I don't have to rewrite it for the next API call?
 
-        const parsedResponse = (api) =>
-            this.apiCall(api)
-                .then(console.log)
+        // This isn't working:
+        // const parsedResponse = (api) =>
+        //     this.apiCall(api)
+        //         .then(console.log)
 
-        parsedResponse(api);        
+        // parsedResponse(api);        
 
         // This is working :)
-        // const parsedResponse = () => 
-        //     fetch(api)
-        //         .then(response => response.json());
+        const parsedResponse = () => 
+            fetch(api)
+                .then(response => response.json());
 
-        // parsedResponse()
-        //     // .then(console.log)
-        //     .then(response => {
-        //         if (response.response.results) {
-        //             this.setState({
-        //                 citiesList: response.response.results
-        //             })
-        //         } else if (response.response.error) {
-        //             console.log(`in else if`);
-        //             this.setState({
-        //                 cityNotFound: response.response.error.description
-        //             })
-        //             return response.response.error.description
-        //         }
-        //     })
+        parsedResponse()
+            // .then(console.log)
+            .then(response => {
+                if (response.response.results) {
+                    this.setState({
+                        citiesList: response.response.results
+                    })
+                } else if (response.response.error) {
+                    console.log(`in else if`);
+                    this.setState({
+                        cityNotFound: response.response.error.description
+                    })
+                }
+            })
     }
 
-        // I need to handle the response. Should I have a helper function I pass to a .then()?
-
-        // Forget almost everything below this line except for when you are setting state
-
-        // let request = new XMLHttpRequest();
-        // request.open('GET',
-        // `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
-        // true
-        // );
-        // // Because it's async, request.onload() doesn't fire until request.send() completes.
-        // // onload = what you want to do with the request once you receive a response
-        // request.onload = () => {
-        //     console.log('request onload!');
-        //     console.log(`request!: ${request}`);
-            
-        //     if (request.response) {
-
-        //         parsedRequest = JSON.parse(request.response);
-        //         console.log(`parsedRequest: ${parsedRequest}`);
-                
-        //     }
-        //     // this is really ugly error handling but this is what comes before using promises and fetch...
-        //     if (parsedRequest.response.results) {
-
-        //         citiesList = parsedRequest.response.results;
-        //         console.log('cl1: ', citiesList);
-        //         this.setState({citiesList});
-        //     } else {
-        //         console.log(`no results, only errors. State doesn't change. Page doesn't refresh.`);
-        //         this.setState({
-        //             cityNotFound: parsedRequest.response.error.description
-        //         })
-                
-            
-        //     }
-        // }
-        
-    //     request.send();
-    //     // console.log('cL2: ', citiesList);
-    //     console.log('this gCL: ', this);
-    // }
-    
     // from list of cities, user should pick which 'Austin', e.g., Austin, TX, so we make another request with a slightly different URL that includes state and city
     // you'll need another one to take the click the user selects:
     // grab the city and state of that and do another HTML request:
