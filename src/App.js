@@ -43,7 +43,6 @@ class App extends Component {
         // let parsedResponse;
         console.log(`this is: ${this}`);
         
-        let citiesList;
         const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
 
         // How can I extract this function a level up so I don't have to rewrite it for the next API call?
@@ -61,7 +60,6 @@ class App extends Component {
                 .then(response => response.json());
 
         parsedResponse()
-            // .then(console.log)
             .then(response => {
                 if (response.response.results) {
                     this.setState({
@@ -80,29 +78,24 @@ class App extends Component {
     // you'll need another one to take the click the user selects:
     // grab the city and state of that and do another HTML request:
     getCityWeather(city) {
-        // console.log('state: ', this.state.forecastLocation);
-        // let location = this.state.forecastLocation;
-        console.log('city: ', city);
-        
-        let parsedRequest;
-        
-        //http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/CA/San_Francisco.json
-        let request = new XMLHttpRequest();
-        request.open('GET',
-        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`,
-            true
-        );
+        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`
 
-        request.onload = () => {
-            parsedRequest = JSON.parse(request.response);
-            // parsedRequest = request.response;
-            console.log('parsedRequest City Weather: ', parsedRequest);
-            this.setState({cityWeather: parsedRequest.current_observation});
-        }
-        request.send();
+        const parsedResponse = () =>
+            fetch(api)
+                .then(response => response.json());
+
+        parsedResponse()
+            .then(response => {
+                if (response.current_observation) {
+                    this.setState({
+                        cityWeather: response.current_observation
+                    })
+                }
+            })
     }
 
     // // once a city is selected, we can also send a request to the api for a forecast; this is a different component
+    // THIS IS FOR GETTING A MULTI-DAY FORECAST.
     // getCityForecast(location) {
     //     let request = new XMLHttpRequest();
     //     request.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);

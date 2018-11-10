@@ -7,15 +7,11 @@ class SearchBar extends Component {
         this.state = {
             city: '' // do I need to set this state?
         };
-
-        console.log('searchBar props: ', props);
-        
     }
 
     // this is only letting user input change state to change the value of the input
     onInputChange(city) {
         console.log('city: ', city);
-        // console.log('this in SB: ', this);
         this.setState({city});
     }
     
@@ -24,8 +20,6 @@ class SearchBar extends Component {
     // I can implement lodash later
     onEnterKey(event, city) {
         if (event.keyCode === 13) {
-            console.log('event: ', event);
-            console.log('city: ', city);
             // this.setState({cityEntered: city});
             // when you pass paramter to the property, that parameter is passed to the function which is the value of that property:
             // console.log looks like this: onCitySearch: function getCityList()
