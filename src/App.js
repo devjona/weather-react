@@ -93,16 +93,14 @@ class App extends Component {
                 }
             })
     }
-
-    // // once a city is selected, we can also send a request to the api for a forecast; this is a different component
-    // THIS IS FOR GETTING A MULTI-DAY FORECAST.
-    // getCityForecast(location) {
-    //     let request = new XMLHttpRequest();
-    //     request.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
-    //     request.send(null);
     
-    //     let response = JSON.parse(request.current_observation) // not sure if I need to change the weather observation to somethiong else
-    // }
+    /* 
+    // THIS IS FOR GETTING A MULTI-DAY FORECAST. Once a city is selected, we can also send a request to the api for a forecast; this is a different component
+
+    getCityForecast(location) {
+        const api = `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
+    } 
+    */
         
     render() {
         return (
