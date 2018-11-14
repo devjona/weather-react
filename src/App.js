@@ -11,79 +11,96 @@ class App extends Component {
         super(props);
 
         this.state = {
-            // city: '', not used currently
             citiesList: [],
             cityWeather: null,
+            cityNotFound: null
+            // city: '', not used currently
             // cityForeast: null also not used at the moment
         };
 
         console.log('constructor this: ', this);
         this.getCityList = this.getCityList.bind(this);
         this.getCityWeather = this.getCityWeather.bind(this);
+        // this.apiCall = this.apiCall.bind(this);
         // this.getCityForecast = this.getCityForecast.bind(this);
     }
 
-    
+    // I only want to write this function once and call it inside of others but I'm having a scope issue...
+    apiCall(api) {
+        fetch(api)
+            .then(res => res.json());
+    }
     // gets user input into the search bar, send that city to the api
     // api will return an array of possible cities
     getCityList(city) {
-        let weather = new XMLHttpRequest();
-        // debugger;
-        let parsedResponse;
-        let citiesList;
-        weather.open('GET',
-        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`,
-        true
-        );
-        // Because it's async, weather.onload() doesn't fire until weather.send() completes.
-        // onload = what you want to do with the request once you receive a response
-        weather.onload = () => {
-            console.log('weather onload!');
-            parsedResponse = JSON.parse(weather.response);
-            citiesList = parsedResponse.response.results;
-            console.log('cl1: ', citiesList);
-            this.setState({citiesList});
-        }
-        weather.send();
-        // console.log('cL2: ', citiesList);
-        console.log('this gCL: ', this);
+        /* 
+        1 Call the weather API
+        2 Parse the response
+        3 Check the response to see if you're getting a list of cities (results) or an error
+        4 Based upon that, you can setState with either the results or the error message
+        */
+
+        // let parsedResponse;
+        console.log(`this is: ${this}`);
+        
+        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
+
+        // How can I extract this function a level up so I don't have to rewrite it for the next API call?
+
+        // This isn't working:
+        // const parsedResponse = (api) =>
+        //     this.apiCall(api)
+        //         .then(console.log)
+
+        // parsedResponse(api);        
+
+        // This is working :)
+        const parsedResponse = () => 
+            fetch(api)
+                .then(response => response.json());
+
+        parsedResponse()
+            .then(response => {
+                if (response.response.results) {
+                    this.setState({
+                        citiesList: response.response.results
+                    })
+                } else if (response.response.error) {
+                    console.log(`in else if`);
+                    this.setState({
+                        cityNotFound: response.response.error.description
+                    })
+                }
+            })
     }
-    
-    
+
     // from list of cities, user should pick which 'Austin', e.g., Austin, TX, so we make another request with a slightly different URL that includes state and city
     // you'll need another one to take the click the user selects:
     // grab the city and state of that and do another HTML request:
     getCityWeather(city) {
-        // console.log('state: ', this.state.forecastLocation);
-        // let location = this.state.forecastLocation;
-        console.log('city: ', city);
-        
-        let parsedResponse;
-        
-        //http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/CA/San_Francisco.json
-        let weather = new XMLHttpRequest();
-        weather.open('GET',
-        `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`,
-            true
-        );
+        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`
 
-        weather.onload = () => {
-            parsedResponse = JSON.parse(weather.response);
-            // parsedResponse = weather.response;
-            console.log('parsedResponse City Weather: ', parsedResponse);
-            this.setState({cityWeather: parsedResponse.current_observation});
-        }
-        weather.send();
+        const parsedResponse = () =>
+            fetch(api)
+                .then(response => response.json());
+
+        parsedResponse()
+            .then(response => {
+                if (response.current_observation) {
+                    this.setState({
+                        cityWeather: response.current_observation
+                    })
+                }
+            })
     }
-
-    // // once a city is selected, we can also send a request to the api for a forecast; this is a different component
-    // getCityForecast(location) {
-    //     let weather = new XMLHttpRequest();
-    //     weather.open('GET', `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
-    //     weather.send(null);
     
-    //     let response = JSON.parse(weather.current_observation) // not sure if I need to change the weather observation to somethiong else
-    // }
+    /* 
+    // THIS IS FOR GETTING A MULTI-DAY FORECAST. Once a city is selected, we can also send a request to the api for a forecast; this is a different component
+
+    getCityForecast(location) {
+        const api = `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
+    } 
+    */
         
     render() {
         return (
@@ -91,6 +108,7 @@ class App extends Component {
                 <SearchBar onCitySearch={this.getCityList} />
                 <CityListDropdown 
                     citiesList={this.state.citiesList} 
+                    cityNotFound={this.state.cityNotFound}
                     // you need to make the API call for city Weather when you click a city...Figure that out!
                     onCitySelect={this.getCityWeather}
                 />

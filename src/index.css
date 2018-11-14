@@ -6,17 +6,17 @@ body {
 
 
 .search-input {
-  width: 30%;
-  margin: 2em;
+  width: 75%;
+  margin: 0.5em;
   font-size: 1.75em;
 
 }
 
 input[type=text] {
 	border: 0.25px solid grey;
-	line-height: 3em;
 	line-height: 2em;
-	padding-left: 1em;
+	line-height: 1.5em;
+	padding-left: 0.5em;
 	border-radius:  5px;
 	border: none;
 	background-color: grey;

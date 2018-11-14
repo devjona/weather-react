@@ -4,27 +4,35 @@ import React from 'react';
 import CityResult from './cityResult'
 
 const CityListDropdown = (props) => {
-    console.log('PROPS cL: ', props);
 
-    const citiesList = props.citiesList.map((city) => {
+    const cityNotFound = props.cityNotFound
+    const citiesList = props.citiesList.filter(city => city.country === 'US')
+        .map((city) => {
+            return (
+                <CityResult 
+                    // you are passing these props to cityResult
+                    key={city.zmw}
+                    city={city}
+                    onCitySelect={props.onCitySelect}
+                    // Add onClick event handler to hide or clear these results.
+                />
+            )
+        }
+    );
+
+    if (!cityNotFound) {
         return (
-            <CityResult 
-                // you are passing these props to cityResult
-                key={city.zmw}
-                city={city}
-                onCitySelect={props.onCitySelect}
-                // Add onClick event handler to hide or clear these results.
-            />
+            <div>
+                <ul className="city-list-dropdown">
+                    {citiesList}
+                </ul>
+            </div>
         )
-    });
-
-    return (
-        <div>
-            <ul className="city-list-dropdown">
-                {citiesList}
-            </ul>
-        </div>
-    )
+    } else {
+        return (
+            <div>{cityNotFound}</div>
+        )
+    }
 };
 
 export default CityListDropdown;
