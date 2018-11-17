@@ -39,20 +39,8 @@ class App extends Component {
         3 Check the response to see if you're getting a list of cities (results) or an error
         4 Based upon that, you can setState with either the results or the error message
         */
-
-        // let parsedResponse;
-        console.log(`this is: ${this}`);
         
         const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
-
-        // How can I extract this function a level up so I don't have to rewrite it for the next API call?
-
-        // This isn't working:
-        // const parsedResponse = (api) =>
-        //     this.apiCall(api)
-        //         .then(console.log)
-
-        // parsedResponse(api);        
 
         // This is working :)
         const parsedResponse = () => 

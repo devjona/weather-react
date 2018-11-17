@@ -1,5 +1,3 @@
-// this isn't a class component
-// import React, { Component } from 'react';
 import React from 'react';
 import CityResult from './cityResult'
 
