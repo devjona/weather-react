@@ -4,7 +4,8 @@ import CityResult from './cityResult'
 const CityListDropdown = (props) => {
 
     const cityNotFound = props.cityNotFound
-    const citiesList = props.citiesList.filter(city => city.country === 'US')
+    // const citiesList = props.citiesList.filter(city => city.country === 'US')
+    const citiesList = props.citiesList
         .map((city) => {
             return (
                 <CityResult 

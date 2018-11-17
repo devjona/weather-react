@@ -51,7 +51,7 @@ class App extends Component {
             .then(response => {
                 if (response.response.results) {
                     this.setState({
-                        citiesList: response.response.results
+                        citiesList: response.response.results.filter(city => city.country === 'US')
                     })
                 } else if (response.response.error) {
                     console.log(`in else if`);
