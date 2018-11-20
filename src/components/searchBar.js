@@ -19,9 +19,8 @@ class SearchBar extends Component {
     // I can implement lodash later
     onEnterKey(event, city) {
         if (event.keyCode === 13) {
-            // when you pass paramter to the property, that parameter is passed to the function which is the value of that property:
-            // console.log looks like this: onCitySearch: function getCityList()
-            this.props.onCitySearch(city);
+            // when you pass parameter to the property, that parameter is passed to the function which is the value of that property:
+            this.props.onCitySearch(city)
         }
     }
 
@@ -37,7 +36,7 @@ class SearchBar extends Component {
                     onKeyDown = {event => this.onEnterKey(event, this.state.city)}
                 />
             </div>
-        );
+        )
     }
 }
 

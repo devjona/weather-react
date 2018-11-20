@@ -1,35 +1,64 @@
-import React, {Component} from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import SearchBar from './components/searchBar';
-import CityListDropdown from './components/cityListDropdown';
-import CityWeather from './components/cityWeather';
+import React, {Component} from 'react'
+// import logo from './logo.svg'
+import './App.css'
+import SearchBar from './components/searchBar'
+import CityListDropdown from './components/cityListDropdown'
+import CityWeather from './components/cityWeather'
 
-console.log('App this: ', this);
+console.log('App this: ', this)
 class App extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             citiesList: [],
             cityWeather: null,
-            cityNotFound: null
-            // city: '', not used currently
-            // cityForeast: null also not used at the moment
-        };
+            cityFound: null,
+            cityListDisplay: null
+        }
 
-        console.log('constructor this: ', this);
-        this.getCityList = this.getCityList.bind(this);
-        this.getCityWeather = this.getCityWeather.bind(this);
+        console.log('constructor this: ', this)
+        this.getCityList = this.getCityList.bind(this)
+        this.getCityWeather = this.getCityWeather.bind(this)
+        this.toggleCityListDisplay = this.toggleCityListDisplay.bind(this)
+        this.cityClickHandler = this.cityClickHandler.bind(this)
+        this.searchEnterHandler = this.searchEnterHandler.bind(this)
         // this.apiCall = this.apiCall.bind(this);
-        // this.getCityForecast = this.getCityForecast.bind(this);
+        // this.getCityForecast = this.getCityForecast.bind(this)
     }
 
     // I only want to write this function once and call it inside of others but I'm having a scope issue...
     apiCall(api) {
         fetch(api)
-            .then(res => res.json());
+            .then(res => res.json())
     }
+
+    
+    /*
+    cityClickHandler() and searchEnterHandler() seems repetitive but, alas, I'm learning.
+    Any suggestions are welcome here!
+    */
+   
+   // EVERY TIME you click on a city in the list dropdown, state in App needs to change so you can tell cityListDropdown to hide
+   cityClickHandler(city) {
+       this.getCityWeather(city)
+       this.toggleCityListDisplay('hide')
+    }
+    
+    // EVERY TIME you press enter, state in App needs to change so you can tell cityListDropdown to show.
+    // Also, in case the search result is bad, you need to toggle the current weather to null, so we don't show that div, until we have new search results.
+    searchEnterHandler(city) {
+        this.setState({cityWeather: null})
+        this.getCityList(city)
+        this.toggleCityListDisplay('show')
+    }
+    
+    toggleCityListDisplay(displayAction) {
+        this.setState({
+            cityListDisplay: displayAction
+        })
+    }
+
     // gets user input into the search bar, send that city to the api
     // api will return an array of possible cities
     getCityList(city) {
@@ -45,18 +74,20 @@ class App extends Component {
         // This is working :)
         const parsedResponse = () => 
             fetch(api)
-                .then(response => response.json());
+                .then(response => response.json())
 
         parsedResponse()
             .then(response => {
                 if (response.response.results) {
                     this.setState({
-                        citiesList: response.response.results.filter(city => city.country === 'US')
+                        citiesList: response.response.results
+                            .filter(city => city.country === 'US'),
+                        cityFound: true
                     })
                 } else if (response.response.error) {
-                    console.log(`in else if`);
+                    console.log(`in else if`)
                     this.setState({
-                        cityNotFound: response.response.error.description
+                        cityFound: response.response.error.description
                     })
                 }
             })
@@ -70,7 +101,7 @@ class App extends Component {
 
         const parsedResponse = () =>
             fetch(api)
-                .then(response => response.json());
+                .then(response => response.json())
 
         parsedResponse()
             .then(response => {
@@ -93,19 +124,22 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <SearchBar onCitySearch={this.getCityList} />
+                <SearchBar 
+                    onCitySearch={this.searchEnterHandler}
+                />
                 <CityListDropdown 
                     citiesList={this.state.citiesList} 
-                    cityNotFound={this.state.cityNotFound}
-                    // you need to make the API call for city Weather when you click a city...Figure that out!
-                    onCitySelect={this.getCityWeather}
+                    cityFound={this.state.cityFound}
+                    onCitySelect={this.cityClickHandler}
+                    cityListDisplay={this.state.cityListDisplay}
+
                 />
                 <CityWeather 
                     cityWeather={this.state.cityWeather} 
                 />
             </div>
-        );
+        )
     }
 }
 
-export default App;
+export default App
