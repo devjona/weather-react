@@ -3,8 +3,8 @@ import CityResult from './cityResult'
 
 const CityListDropdown = (props) => {
 
-    const cityNotFound = props.cityNotFound
-    const citiesList = props.citiesList.filter(city => city.country === 'US')
+    const cityFound = props.cityFound
+    const citiesList = props.citiesList
         .map((city) => {
             return (
                 <CityResult 
@@ -12,23 +12,24 @@ const CityListDropdown = (props) => {
                     key={city.zmw}
                     city={city}
                     onCitySelect={props.onCitySelect}
-                    // Add onClick event handler to hide or clear these results.
                 />
             )
         }
     );
 
-    if (!cityNotFound) {
+    const cityListDropdownClasses = `city-list-dropdown ${props.cityListDisplay}`
+
+    if (cityFound === true) {
         return (
-            <div>
-                <ul className="city-list-dropdown">
+            <div className={cityListDropdownClasses}>
+                <ul className="city-list">
                     {citiesList}
                 </ul>
             </div>
         )
     } else {
         return (
-            <div>{cityNotFound}</div>
+            <div>{cityFound}</div>
         )
     }
 };
