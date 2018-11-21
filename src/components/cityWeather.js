@@ -15,12 +15,12 @@ const CityWeather = ({cityWeather}) => {
     
     return (
         <ul className="current-weather">
-            <p>Forecast</p>
-            <p>Location: {cityFull}</p>
-            <p>Temperature: {temp}</p>
-            <p>Humidity: {humidity}</p>
-            <p>Feels Like: {feelsLike}</p>
-            <p>Wind Direction: {windDir}</p>
+            <li>Forecast</li>
+            <li>Location: {cityFull}</li>
+            <li>Temperature: {temp}</li>
+            <li>Humidity: {humidity}</li>
+            <li>Feels Like: {feelsLike}</li>
+            <li>Wind Direction: {windDir}</li>
         </ul>
     )
 }

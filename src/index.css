@@ -7,8 +7,8 @@ body {
 
 .search-input {
   width: 75%;
-  margin: 0.5em;
-  font-size: 1.75em;
+  margin: 1.5em;
+  font-size: 1.25em;
 
 }
 
@@ -22,10 +22,17 @@ input[type=text] {
 	background-color: white;
 }
 
-/* .city-list-dropdown {
-
+.city-list-dropdown {
+	position: absolute;
+	left: 25%;
 }
 
+.city-list, .current-weather {
+	list-style-type: none;
+	text-align: left;
+}
+
+/*
 .current-weather {
 
 } */
@@ -37,3 +44,4 @@ input[type=text] {
 .show {
 	display: block
 }
+

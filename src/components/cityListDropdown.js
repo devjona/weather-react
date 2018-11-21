@@ -22,7 +22,7 @@ const CityListDropdown = (props) => {
     if (cityFound === true) {
         return (
             <div className={cityListDropdownClasses}>
-                <ul>
+                <ul className="city-list">
                     {citiesList}
                 </ul>
             </div>
