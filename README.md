@@ -9,7 +9,6 @@ I'm encountering some interesting problems that I intend to solve. I'm thinking 
 
 ## Stuff to solve:
 
-
 ### The main kinds of issues or enhancements that are my focus are:
 * API Issues
 * Error handling
@@ -31,3 +30,4 @@ I'm creating and tracking issues using this tool: [Weather-React Board on Waffle
 * Logitech 29" ultrawide display (the budget version)
 * Electric standing desk
 * Exercise ball for a chair when sitting
+
