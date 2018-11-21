@@ -20,7 +20,7 @@ class App extends Component {
         console.log('constructor this: ', this)
         this.getCityList = this.getCityList.bind(this)
         this.getCityWeather = this.getCityWeather.bind(this)
-        this.toggleCityListDisplay = this.toggleCityListDisplay.bind(this)
+        // this.toggleCityListDisplay = this.toggleCityListDisplay.bind(this)
         this.cityClickHandler = this.cityClickHandler.bind(this)
         this.searchEnterHandler = this.searchEnterHandler.bind(this)
         // this.apiCall = this.apiCall.bind(this);
@@ -32,7 +32,6 @@ class App extends Component {
         fetch(api)
             .then(res => res.json())
     }
-
     
     /*
     cityClickHandler() and searchEnterHandler() seems repetitive but, alas, I'm learning.
@@ -41,8 +40,12 @@ class App extends Component {
    
    // EVERY TIME you click on a city in the list dropdown, state in App needs to change so you can tell cityListDropdown to hide
    cityClickHandler(city) {
+    //    this.toggleCityListDisplay('hide')
+       this.setState({
+           cityListDisplay: 'hide',
+           cityWeather: 'searching'
+       })
        this.getCityWeather(city)
-       this.toggleCityListDisplay('hide')
     }
     
     // EVERY TIME you press enter, state in App needs to change so you can tell cityListDropdown to show.
@@ -50,14 +53,17 @@ class App extends Component {
     searchEnterHandler(city) {
         this.setState({cityWeather: null})
         this.getCityList(city)
-        this.toggleCityListDisplay('show')
     }
     
+    /*
+    Leave this here just for memory's sake or in case you need to return to using this helper function leveraged by other helper functions (the enter and click event handler helpers)
+
     toggleCityListDisplay(displayAction) {
         this.setState({
             cityListDisplay: displayAction
         })
     }
+    */
 
     // gets user input into the search bar, send that city to the api
     // api will return an array of possible cities
@@ -82,7 +88,8 @@ class App extends Component {
                     this.setState({
                         citiesList: response.response.results
                             .filter(city => city.country === 'US'),
-                        cityFound: true
+                        cityFound: true,
+                        cityListDisplay: 'show'
                     })
                 } else if (response.response.error) {
                     console.log(`in else if`)
@@ -107,7 +114,7 @@ class App extends Component {
             .then(response => {
                 if (response.current_observation) {
                     this.setState({
-                        cityWeather: response.current_observation
+                        cityWeather: response.current_observation,
                     })
                 }
             })
@@ -132,7 +139,6 @@ class App extends Component {
                     cityFound={this.state.cityFound}
                     onCitySelect={this.cityClickHandler}
                     cityListDisplay={this.state.cityListDisplay}
-
                 />
                 <CityWeather 
                     cityWeather={this.state.cityWeather} 

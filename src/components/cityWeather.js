@@ -4,6 +4,9 @@ const CityWeather = ({cityWeather}) => {
     if (!cityWeather) {
         return <div>Waiting for your weather search...</div>
     }
+    if (cityWeather === 'searching') {
+        return <div>Fetching your weather info...</div>
+    }
     const temp = cityWeather.temperature_string
     const cityFull = cityWeather.observation_location.full
     const humidity = cityWeather.relative_humidity
