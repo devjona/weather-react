@@ -14,14 +14,18 @@ const CityWeather = ({cityWeather}) => {
     const feelsLike = cityWeather.feelslike_string
     
     return (
-        <ul className="current-weather">
-            <li>Forecast</li>
-            <li>Location: {cityFull}</li>
-            <li>Temperature: {temp}</li>
-            <li>Humidity: {humidity}</li>
-            <li>Feels Like: {feelsLike}</li>
-            <li>Wind Direction: {windDir}</li>
-        </ul>
+        <div className="current-weather-container">
+            <div className="weather-data">Location:</div>
+            <div className="weather-data">{cityFull}</div>
+            <div className="weather-data">Temperature:</div>
+            <div className="weather-data">{temp}</div>
+            <div className="weather-data">Humidity:</div>
+            <div className="weather-data">{humidity}</div>
+            <div className="weather-data">Feels Like:</div>
+            <div className="weather-data">{feelsLike}</div>
+            <div className="weather-data">Wind Direction:</div>
+            <div className="weather-data">{windDir}</div>
+        </div>
     )
 }
 

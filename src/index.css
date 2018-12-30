@@ -32,10 +32,18 @@ input[type=text] {
 	text-align: left;
 }
 
-/*
-.current-weather {
 
-} */
+.current-weather-container {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+	grid-gap: 1em;
+	grid-auto-rows: minmax(3em, auto);
+}
+
+.weather-data {
+	border: 1px solid orange;
+	background: white;
+}
 
 .hide {
 	display: none
