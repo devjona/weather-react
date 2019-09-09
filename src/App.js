@@ -20,19 +20,10 @@ class App extends Component {
         console.log('constructor this: ', this)
         this.getCityList = this.getCityList.bind(this)
         this.getCityWeather = this.getCityWeather.bind(this)
-        // this.toggleCityListDisplay = this.toggleCityListDisplay.bind(this)
         this.cityClickHandler = this.cityClickHandler.bind(this)
         this.searchEnterHandler = this.searchEnterHandler.bind(this)
-        // this.apiCall = this.apiCall.bind(this);
-        // this.getCityForecast = this.getCityForecast.bind(this)
     }
 
-    // I only want to write this function once and call it inside of others but I'm having a scope issue...
-    apiCall(api) {
-        fetch(api)
-            .then(res => res.json())
-    }
-    
     /*
     cityClickHandler() and searchEnterHandler() seems repetitive but, alas, I'm learning.
     Any suggestions are welcome here!
@@ -40,7 +31,6 @@ class App extends Component {
    
    // EVERY TIME you click on a city in the list dropdown, state in App needs to change so you can tell cityListDropdown to hide
    cityClickHandler(city) {
-    //    this.toggleCityListDisplay('hide')
        this.setState({
            cityListDisplay: 'hide',
            cityWeather: 'searching'
@@ -55,18 +45,7 @@ class App extends Component {
         this.getCityList(city)
     }
     
-    /*
-    Leave this here just for memory's sake or in case you need to return to using this helper function leveraged by other helper functions (the enter and click event handler helpers)
 
-    toggleCityListDisplay(displayAction) {
-        this.setState({
-            cityListDisplay: displayAction
-        })
-    }
-    */
-
-    // gets user input into the search bar, send that city to the api
-    // api will return an array of possible cities
     getCityList(city) {
         /* 
         1 Call the weather API
@@ -77,7 +56,6 @@ class App extends Component {
         
         const api = `http://api.apixu.com/v1/search.json?key=416ca72bdb9f4e95a2c153646190909&q=${city}`;
 
-        // This is working :)
         const parsedResponse = () => 
             fetch(api)
                 .then(response => response.json())
@@ -142,9 +120,11 @@ class App extends Component {
                         cityListDisplay={this.state.cityListDisplay}
                     />
                 </div>
-                <CityWeather 
-                    cityWeather={this.state.cityWeather} 
-                />
+                <div className="weather-container">
+                    <CityWeather 
+                        cityWeather={this.state.cityWeather} 
+                    />
+                </div>
             </div>
         )
     }
