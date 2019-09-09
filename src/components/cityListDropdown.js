@@ -7,6 +7,7 @@ const CityListDropdown = (props) => {
     const citiesList = props.citiesList
         .map((city) => {
             return (
+                // Just return the JSX from cityResult in here; you don't need another component, do you?
                 <CityResult 
                     // you are passing these props to cityResult
                     key={city.zmw}

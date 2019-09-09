@@ -131,15 +131,17 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <SearchBar 
-                    onCitySearch={this.searchEnterHandler}
-                />
-                <CityListDropdown 
-                    citiesList={this.state.citiesList} 
-                    cityFound={this.state.cityFound}
-                    onCitySelect={this.cityClickHandler}
-                    cityListDisplay={this.state.cityListDisplay}
-                />
+                <div className="search-container">
+                    <SearchBar 
+                        onCitySearch={this.searchEnterHandler}
+                    />
+                    <CityListDropdown 
+                        citiesList={this.state.citiesList} 
+                        cityFound={this.state.cityFound}
+                        onCitySelect={this.cityClickHandler}
+                        cityListDisplay={this.state.cityListDisplay}
+                    />
+                </div>
                 <CityWeather 
                     cityWeather={this.state.cityWeather} 
                 />
