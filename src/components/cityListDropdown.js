@@ -10,8 +10,10 @@ const CityListDropdown = (props) => {
                 // Just return the JSX from cityResult in here; you don't need another component, do you?
                 <CityResult 
                     // you are passing these props to cityResult
-                    key={city.zmw}
-                    city={city}
+                    key={city.id}
+                    name={city.name}
+                    lat={city.lat}
+                    lon={city.lon}
                     onCitySelect={props.onCitySelect}
                 />
             )

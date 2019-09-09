@@ -75,26 +75,26 @@ class App extends Component {
         4 Based upon that, you can setState with either the results or the error message
         */
         
-        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city}.json`;
+        const api = `http://api.apixu.com/v1/search.json?key=416ca72bdb9f4e95a2c153646190909&q=${city}`;
 
         // This is working :)
         const parsedResponse = () => 
             fetch(api)
                 .then(response => response.json())
+        console.info(parsedResponse)
 
         parsedResponse()
             .then(response => {
-                if (response.response.results) {
+                if (response.length > 0) {
                     this.setState({
-                        citiesList: response.response.results
-                            .filter(city => city.country === 'US'),
+                        citiesList: response,
                         cityFound: true,
                         cityListDisplay: 'show'
                     })
-                } else if (response.response.error) {
+                } else if (response.length == 0) {
                     console.log(`in else if`)
                     this.setState({
-                        cityFound: response.response.error.description
+                        cityFound: `No results were found for ${city}`
                     })
                 }
             })
@@ -104,7 +104,7 @@ class App extends Component {
     // you'll need another one to take the click the user selects:
     // grab the city and state of that and do another HTML request:
     getCityWeather(city) {
-        const api = `http://api.wunderground.com/api/e65ca2760713be4f/conditions/q/${city.state}/${city.city}.json`
+        const api = `http://api.apixu.com/v1/current.json?key=416ca72bdb9f4e95a2c153646190909&q=${city}`
 
         const parsedResponse = () =>
             fetch(api)
@@ -112,9 +112,9 @@ class App extends Component {
 
         parsedResponse()
             .then(response => {
-                if (response.current_observation) {
+                if (response.current) {
                     this.setState({
-                        cityWeather: response.current_observation,
+                        cityWeather: response
                     })
                 }
             })

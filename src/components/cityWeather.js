@@ -7,16 +7,16 @@ const CityWeather = ({cityWeather}) => {
     if (cityWeather === 'searching') {
         return <div>Fetching your weather info...</div>
     }
-    const temp = cityWeather.temperature_string
-    const cityFull = cityWeather.observation_location.full
-    const humidity = cityWeather.relative_humidity
-    const windDir = cityWeather.wind_dir
-    const feelsLike = cityWeather.feelslike_string
+    const cityName = cityWeather.location.name
+    const temp = cityWeather.current.temp_c
+    const humidity = cityWeather.current.humidity
+    const windDir = cityWeather.current.wind_dir
+    const feelsLike = cityWeather.current.feelslike_c
     
     return (
         <div className="current-weather-container">
             <div className="weather-data">Location:</div>
-            <div className="weather-data">{cityFull}</div>
+            <div className="weather-data">{cityName}</div>
             <div className="weather-data">Temperature:</div>
             <div className="weather-data">{temp}</div>
             <div className="weather-data">Humidity:</div>
