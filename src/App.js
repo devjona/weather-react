@@ -13,8 +13,8 @@ class App extends Component {
         this.state = {
             citiesList: [],
             cityWeather: null,
-            cityFound: null,
-            cityListDisplay: null
+            resultsForSearchTerm: null,
+            noResultsMsg: null
         }
 
         console.log('constructor this: ', this)
@@ -23,17 +23,12 @@ class App extends Component {
         this.cityClickHandler = this.cityClickHandler.bind(this)
         this.searchEnterHandler = this.searchEnterHandler.bind(this)
     }
-
-    /*
-    cityClickHandler() and searchEnterHandler() seems repetitive but, alas, I'm learning.
-    Any suggestions are welcome here!
-    */
    
    // EVERY TIME you click on a city in the list dropdown, state in App needs to change so you can tell cityListDropdown to hide
    cityClickHandler(city) {
        this.setState({
-           cityListDisplay: 'hide',
-           cityWeather: 'searching'
+            resultsForSearchTerm: null,
+            cityWeather: 'searching'
        })
        this.getCityWeather(city)
     }
@@ -41,7 +36,11 @@ class App extends Component {
     // EVERY TIME you press enter, state in App needs to change so you can tell cityListDropdown to show.
     // Also, in case the search result is bad, you need to toggle the current weather to null, so we don't show that div, until we have new search results.
     searchEnterHandler(city) {
-        this.setState({cityWeather: null})
+        this.setState({
+            cityWeather: null,
+            resultsForSearchTerm: null,
+            noResultsMsg: null
+        })
         this.getCityList(city)
     }
     
@@ -59,20 +58,18 @@ class App extends Component {
         const parsedResponse = () => 
             fetch(api)
                 .then(response => response.json())
-        console.info(parsedResponse)
-
+                
         parsedResponse()
             .then(response => {
                 if (response.length > 0) {
                     this.setState({
                         citiesList: response,
-                        cityFound: true,
-                        cityListDisplay: 'show'
+                        resultsForSearchTerm: true,
                     })
                 } else if (response.length === 0) {
-                    console.log(`in else if`)
                     this.setState({
-                        cityFound: `No results were found for ${city}`
+                        resultsForSearchTerm: false,
+                        noResultsMsg: `No results were found for "${city}"; please search for a different term.`
                     })
                 }
             })
@@ -90,6 +87,7 @@ class App extends Component {
 
         parsedResponse()
             .then(response => {
+                console.info(response)
                 if (response.current) {
                     this.setState({
                         cityWeather: response
@@ -100,7 +98,6 @@ class App extends Component {
     
     /* 
     // THIS IS FOR GETTING A MULTI-DAY FORECAST. Once a city is selected, we can also send a request to the api for a forecast; this is a different component
-
     getCityForecast(location) {
         const api = `http://api.wunderground.com/api/e65ca2760713be4f/forecast/q/${state}/${city}.json`);
     } 
@@ -115,9 +112,9 @@ class App extends Component {
                     />
                     <CityListDropdown 
                         citiesList={this.state.citiesList} 
-                        cityFound={this.state.cityFound}
+                        resultsForSearchTerm={this.state.resultsForSearchTerm}
+                        noResultsMsg={this.state.noResultsMsg}
                         onCitySelect={this.cityClickHandler}
-                        cityListDisplay={this.state.cityListDisplay}
                     />
                 </div>
                 <div className="weather-container">

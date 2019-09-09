@@ -3,7 +3,8 @@ import CityResult from './cityResult'
 
 const CityListDropdown = (props) => {
 
-    const cityFound = props.cityFound
+    const resultsForSearchTerm = props.resultsForSearchTerm
+    const noResultsMsg = props.noResultsMsg
     const citiesList = props.citiesList
         .map((city) => {
             return (
@@ -20,19 +21,22 @@ const CityListDropdown = (props) => {
         }
     );
 
-    const cityListDropdownClasses = `city-list-dropdown ${props.cityListDisplay}`
-
-    if (cityFound === true) {
+    if (resultsForSearchTerm === true) {
         return (
-            <div className={cityListDropdownClasses}>
+            // <div className={cityListDropdownClasses}>
+            <div className="city-list-dropdown">
                 <ul className="city-list">
                     {citiesList}
                 </ul>
             </div>
         )
     } else {
+        // return null; I was doing this but I'd like to return an error message
         return (
-            <div>{cityFound}</div>
+            // You can also return a different kind of component that looks more like an error message box!
+            <div className="city-list-dropdown">
+                {noResultsMsg}
+            </div>
         )
     }
 };

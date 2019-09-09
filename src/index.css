@@ -24,10 +24,10 @@ input[type=text] {
 }
 
 .city-list-dropdown {
-	position: absolute;
+	/* position: absolute; */
 	/* left: 25%; */
-	/* width: 80%; */
-	margin: 0 1rem;
+	width: 80%;
+	margin: 0 auto;
 }
 
 .city-list, .current-weather {
@@ -41,8 +41,12 @@ input[type=text] {
 }
 
 .city-list > li {
-	padding: 0 0.25rem;
-	border-bottom: solid grey 0.25rem;
+	padding: 0.5rem;
+	border-bottom: solid grey 0.1rem;
+}
+
+.city-list > li:last-child {
+	border-bottom: none;
 }
 
 .city-list > li:hover {
