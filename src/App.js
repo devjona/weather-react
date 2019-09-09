@@ -69,7 +69,7 @@ class App extends Component {
                         cityFound: true,
                         cityListDisplay: 'show'
                     })
-                } else if (response.length == 0) {
+                } else if (response.length === 0) {
                     console.log(`in else if`)
                     this.setState({
                         cityFound: `No results were found for ${city}`
